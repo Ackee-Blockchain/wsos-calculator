@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult;
 
-declare_id!("2VsDgBxxmv6cyKAJjjmKHggt777rN4ELvQ2W6yCzzpqp");
+declare_id!("GSdyp7DuFmYee68aQpMavtJTyuxNYj8JX3xZn3nkYzos");
 
 #[program]
 pub mod calculator {
@@ -13,9 +13,39 @@ pub mod calculator {
         Ok({})
     }
 
-    pub fn add(ctx: Context<Addition>, num1: i64, num2: i64) -> ProgramResult {
+    pub fn add(ctx: Context<DoOperation>, num1: i64, num2: i64) -> ProgramResult {
         let calculator = &mut ctx.accounts.calculator;
         calculator.result = num1 + num2;
+        Ok(())
+    }
+
+    pub fn subtract(ctx: Context<DoOperation>, num1: i64, num2: i64) -> ProgramResult {
+        let calculator = &mut ctx.accounts.calculator;
+        calculator.result = num1 - num2;
+        Ok(())
+    }
+
+    pub fn multiply(ctx: Context<DoOperation>, num1: i64, num2: i64) -> ProgramResult {
+        let calculator = &mut ctx.accounts.calculator;
+        calculator.result = num1 * num2;
+        Ok(())
+    }
+
+    pub fn divide(ctx: Context<DoOperation>, num1: i64, num2: i64) -> ProgramResult {
+        let calculator = &mut ctx.accounts.calculator;
+        calculator.result = num1 / num2;
+        Ok(())
+    }
+
+    pub fn modulo(ctx: Context<DoOperation>, num1: i64, num2: i64) -> ProgramResult {
+        let calculator = &mut ctx.accounts.calculator;
+        calculator.result = num1 % num2;
+        Ok(())
+    }
+
+    pub fn get_result(ctx: Context<DoOperation>) -> ProgramResult {
+        let calculator = &mut ctx.accounts.calculator;
+        msg!("Result: {}", calculator.result);
         Ok(())
     }
     
@@ -34,7 +64,7 @@ pub struct Create<'info> {
 }
 
 #[derive(Accounts)]
-pub struct Addition<'info> {
+pub struct DoOperation<'info> {
     #[account(mut)]
     pub calculator: Account<'info, Calculator>,
 }
