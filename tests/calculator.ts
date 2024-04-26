@@ -1,10 +1,9 @@
-import * as anchor from "@project-serum/anchor";
-import { Program } from "@project-serum/anchor";
+import * as anchor from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
 import { Calculator } from "../target/types/calculator";
-const { SystemProgram } = anchor.web3
 import { expect } from 'chai';
 
-//Moka works using predescribed it blocks 
+//Moka works using predescribed it blocks
 describe("calculator", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
@@ -25,7 +24,6 @@ describe("calculator", () => {
       {
           calculator: calculatorPair.publicKey,
           user: programProvider.wallet.publicKey,
-          systemProgram: SystemProgram.programId,
       }
   ).signers([calculatorPair]).rpc()
 
